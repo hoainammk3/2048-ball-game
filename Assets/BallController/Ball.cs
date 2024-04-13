@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    private BallContainerPrefabs _ballControllerPrefabs;
+    private BallContainer _ballContainer;
+    
     public static float lastExplosiveTime;
     public static float currentTime;
     [SerializeField] private int power;
@@ -18,25 +21,10 @@ public class Ball : MonoBehaviour
 
     public float ScaleDefautl => scaleDefautl;
 
-    public void SetPower(int power)
-    {
-        this.power = power;
-    }
-    private void Awake()
-    {
-        UpdateSizeAndValue();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    void Transfer()
-    {
-        power += 1;
-        UpdateSizeAndValue();
     }
 
     void Explosive()
@@ -99,15 +87,13 @@ public class Ball : MonoBehaviour
         currentTime = Time.time;
     }
 
-    public void UpdateSizeAndValue()
-    {
-        value = (int)Math.Pow(2, power);
-        transform.localScale = scaleDefautl * (power) * new Vector3(1, 1, 1);
-        transform.GetChild(1).GetComponent<TextMesh>().text = value.ToString();
-    }
-
     private void OnDestroy()
     {
         Explosive();
+    }
+
+    void Transfer()
+    {
+        
     }
 }
